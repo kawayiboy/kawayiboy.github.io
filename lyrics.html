@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="jquery-qrcode/src/jquery.qrcode.js"></script>
+<script type="text/javascript" src="jquery-qrcode/src/qrcode.js"></script>
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="text-center">月亮代表我的心</h1>
+                    <p class="text-center">你问我爱你有多深
+                        <br>我爱你有几分
+                        <br>我的情也真
+                        <br>我的爱也真
+                        <br>月亮代表我的心
+                        <br>
+                        <br>你问我爱你有多深
+                        <br>我爱你有几分
+                        <br>我的情不移
+                        <br>我的爱不变
+                        <br>月亮代表我的心
+                        <br>轻轻的一个吻
+                        <br>已经打动我的心
+                        <br>深深的一段情
+                        <br>教我思念到如今
+                        <br>
+                        <br>你问我爱你有多深
+                        <br>我爱你有几分
+                        <br>你去想一想
+                        <br>你去看一看
+                        <br>月亮代表我的心</p>
+                </div>
+				<div class="col-md-12 text-center" id="qrcodeCanvas"></div>
+             </div>
+        </div>
+    </div>
+    <script>
+	//jQuery('#qrcode').qrcode("this plugin is great");
+	jQuery('#qrcodeCanvas').qrcode({
+		text	: "http://kawayiboy.github.io/lyrics.html"
+	});		
+</script>
+</body>
+
+</html>
