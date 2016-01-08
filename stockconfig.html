@@ -113,6 +113,22 @@
         return stock_market;
     }
 
+    $(document).ready(function(){
+        for (var i = 0; i < localStorage.length; i++) {
+            stockcode = localStorage.key(i);
+            if(stockcode.length!=6)
+                continue;
+
+            var inner = '<tr>';
+            var stockdata = getObj(stockcode);
+            inner += '<td>' + stockcode + '</td>';
+            inner += '<td>' + stockdata[0] + '</td>';
+            inner += '<td>' + stockdata[1] + '</td>';
+            inner += '</tr>';
+            $('#stock_table').append(inner);   
+        }
+    });
+
     $('#gen_btn').click(function() {
         if (typeof(Storage) !== "undefined") {
             // SetObj("000811", ["烟台冰轮", 16.77])
@@ -165,6 +181,7 @@
                 inner += '<td>' + stockdata[1] + '</td>';
             inner += '</tr>';
             $('#stock_table').append(inner);
+            SetObj(stockcode,stockdata);
             });
 
 
