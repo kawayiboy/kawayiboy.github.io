@@ -1,0 +1,178 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script src="./js/jquery-ui-1.11.4.js"></script>
+    <link href="./css/jquery-ui.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="ui-widget col-sm-10">
+                    <input id="stock_code" class="col-sm-10">
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" class="btn btn-default" id="gen_btn">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id='viewer'></div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>代码</th>
+                                <th>名称</th>
+                                <th>买入价</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stock_table">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function SetObj(key, obj) {
+        if (localStorage.getItem(key) === null || localStorage.getItem(key) !== obj) {
+            localStorage[key] = JSON.stringify(obj);
+        }
+    }
+
+    function getObj(key) {
+        return JSON.parse(localStorage.getItem(key))
+    }
+
+    function printKeyValue() {
+        for (var i = 0; i < localStorage.length; i++) {
+            console.log(localStorage.key(i) + " : " + localStorage[localStorage.key(i)]);
+        }
+    }
+    $(function() {
+        var availableTags = [
+            "002508",
+            "000333",
+            "600519",
+            "300027",
+            "000651",
+            "600690",
+            "600597",
+            "600887",
+            "601566",
+            "002029",
+            "002154",
+            "002032",
+            "600048",
+            "000024",
+            "000002",
+            "600030",
+            "600837",
+            "601988",
+            "600999",
+            "601628",
+            "600000",
+            "600036",
+            "601398",
+            "002024",
+            "002739",
+            "600028",
+            "601766",
+            "601519",
+            "000150",
+            "300085",
+        ];
+        $("#stock_code").autocomplete({
+            source: availableTags
+        });
+    });
+
+    $(".target").change(function() {
+        alert("Handler for .change() called.");
+    });
+
+    function get_stock_market(code) {
+        checkcode = code[0];
+        stock_market = '';
+        if (parseInt(checkcode) <= 4)
+            stock_market = "sz";
+        else if (parseInt(checkcode) >= 5)
+            stock_market = "sh";
+        return stock_market;
+    }
+
+    $('#gen_btn').click(function() {
+        if (typeof(Storage) !== "undefined") {
+            // SetObj("000811", ["烟台冰轮", 16.77])
+
+            // printKeyValue();
+
+            // var key = localStorage.key(0);
+            // var obj = getObj(key);
+            // var inner = '<tr>';
+            // inner += '<td>' + key + '</td>';
+            // for (var i = 0; i < obj.length; i++) {
+            //     inner += '<td>' + obj[i] + '</td>';
+            // }
+            // inner += '</tr>';
+            // $('#stock_table').html(inner);
+
+
+
+            $.ajaxPrefilter(function(options) {
+                if (options.crossDomain && jQuery.support.cors) {
+                    var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+                    options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+                    //options.url = "http://cors.corsproxy.io/url=" + options.url;
+                }
+            });
+
+            var stockcode = $("#stock_code").val();
+            if(stockcode.length!=6)
+                return;
+            var url = 'http://hq.sinajs.cn/list=' + get_stock_market(stockcode) + stockcode;
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                crossDomain: true,
+            }).done(function(data) {
+                if (console && console.log) {
+                    console.log(data);
+                }
+
+                begIdx = data.indexOf('=')
+                endIdx = data.indexOf(',')
+                endIdx = data.indexOf(',',endIdx+1);
+                stockname = data.substring(begIdx+2,endIdx);
+                stockdata = stockname.split(',');
+
+                var inner = '<tr>';
+            inner += '<td>' + stockcode + '</td>';
+                inner += '<td>' + stockdata[0] + '</td>';
+                inner += '<td>' + stockdata[1] + '</td>';
+            inner += '</tr>';
+            $('#stock_table').append(inner);
+            });
+
+
+        } else {
+            document.getElementById("result").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+    });
+    </script>
+</body>
+
+</html>
