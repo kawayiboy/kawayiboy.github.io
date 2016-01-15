@@ -223,6 +223,9 @@
             var stockcode = $("#stock_code").val();
             if (stockcode.length != 6)
                 return;
+            if(localStorage.getItem(stockcode) !== null)
+                return;
+            
             var url = 'http://hq.sinajs.cn/list=' + get_stock_market(stockcode) + stockcode;
             console.log(url);
             $.ajax({
