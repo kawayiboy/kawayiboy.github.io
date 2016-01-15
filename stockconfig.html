@@ -54,7 +54,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id='modal-title'>Modal title</h4></div>
                 <div class="modal-body">
-                    <p>One fine body...</p>
+                    <p>Buy Price</p>
                     <input id="stock_buy_price" class="col-sm-10">
                 </div>
 
@@ -117,6 +117,14 @@
         });
     });
 
+    function add_edit_row(stockcode, stockprice){
+        return '<td><a class="btn mini blue-stripe" onclick="edit_click(this,'+stockprice+')" data-id="'+stockcode+'">Edit</a></td>';
+    }
+
+    function add_delete_row(stockcode){
+        return '<td><a class="confirm-delete btn mini red-stripe" onclick="delete_click(this)" data-id="'+stockcode+'">Delete</a></td>';
+    }
+
     $(".target").change(function() {
         alert("Handler for .change() called.");
     });
@@ -141,9 +149,9 @@
             var stockdata = getObj(stockcode);
             inner += '<td>' + stockcode + '</td>';
             inner += '<td>' + stockdata[0] + '</td>';
-            inner += '<td>' + stockdata[1] + '</td>';                
-            inner += '<td><a class="btn mini blue-stripe" onclick="edit_click(this,'+stockdata[1]+')" data-id="'+stockcode+'">Edit</a></td>';
-            inner += '<td><a class="confirm-delete btn mini red-stripe" onclick="delete_click(this)" data-id="'+stockcode+'">Delete</a></td>';
+            inner += '<td id="price_'+stockcode+'">' + stockdata[1] + '</td>';
+            inner += add_edit_row(stockcode,stockdata[1]);
+            inner += add_delete_row(stockcode);
             inner += '</tr>';
             $('#stock_table').append(inner);
         }
@@ -165,15 +173,18 @@
 
         var id = $(e).data('id');
         // console.log(id);
-        $('#modal-title').html(id);
-        $('#myModal').data('id', id).modal('show');
+        // $('#modal-title').html(id);
+        // $('#myModal').data('id', id).modal('show');
+        $('[data-id='+id+']').parents('tr').remove();
+        $('#myModal').modal('hide');
     }
 
     $('#btnYes').click(function() {
         // handle deletion here
         var id = $('#myModal').data('id');
         console.log(id);
-        $('[data-id='+id+']').parents('tr').remove();
+        // $('[data-id='+id+']').parents('tr').remove();
+        $('#price_'+id).html($('#stock_buy_price').val());
         $('#myModal').modal('hide');
     });
 
@@ -226,9 +237,9 @@
                 var inner = '<tr>';
                 inner += '<td>' + stockcode + '</td>';
                 inner += '<td>' + stockdata[0] + '</td>';
-                inner += '<td>' + stockdata[1] + '</td>';
-                inner += '<td><a class="btn mini blue-stripe" onclick="edit_click(this)" data-id="'+stockcode+'">Edit</a></td>';
-                inner += '<td><a class="confirm-delete btn mini red-stripe" onclick="delete_click(this)" data-id="'+stockcode+'">Delete</a></td>';
+                inner += '<td id="price_'+stockcode+'">' + stockdata[1] + '</td>';
+                inner += add_edit_row(stockcode,stockdata[1]);
+                inner += add_delete_row(stockcode);
                 inner += '</tr>';
                 $('#stock_table').append(inner);
                 SetObj(stockcode, stockdata);
