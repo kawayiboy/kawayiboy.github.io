@@ -64,7 +64,7 @@
         </div>
     </div>
     <script>
-    function SetObj(key, obj) {
+    function setObj(key, obj) {
         if (localStorage.getItem(key) === null || localStorage.getItem(key) !== obj) {
             localStorage[key] = JSON.stringify(obj);
         }
@@ -176,7 +176,9 @@
         // $('#modal-title').html(id);
         // $('#myModal').data('id', id).modal('show');
         $('[data-id='+id+']').parents('tr').remove();
+        localStorage.removeItem(id);
         $('#myModal').modal('hide');
+
     }
 
     $('#btnYes').click(function() {
@@ -184,13 +186,17 @@
         var id = $('#myModal').data('id');
         console.log(id);
         // $('[data-id='+id+']').parents('tr').remove();
-        $('#price_'+id).html($('#stock_buy_price').val());
+        var new_price = $('#stock_buy_price').val();
+        var stockdata = getObj(id);
+        stockdata[1] = new_price;
+        setObj(id,stockdata);
+        $('#price_'+id).html(new_price);
         $('#myModal').modal('hide');
     });
 
     $('#gen_btn').click(function() {
         if (typeof(Storage) !== "undefined") {
-            // SetObj("000811", ["烟台冰轮", 16.77])
+            // setObj("000811", ["烟台冰轮", 16.77])
 
             // printKeyValue();
 
@@ -242,7 +248,7 @@
                 inner += add_delete_row(stockcode);
                 inner += '</tr>';
                 $('#stock_table').append(inner);
-                SetObj(stockcode, stockdata);
+                setObj(stockcode, stockdata);
             });
 
 
