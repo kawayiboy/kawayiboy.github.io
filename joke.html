@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="jquery-qrcode/src/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="jquery-qrcode/src/qrcode.js"></script>
+</head>
+
+<body>
+    <div class="section">
+        <div class="container">
+            <div class="row" id='content'>
+<!--             	<h3 id='joke_title'></h3>
+                <p id='joke_text'></p> -->
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $.ajax({
+            url: 'http://apis.baidu.com/showapi_open_bus/showapi_joke/joke_text?page=1',
+            type: 'GET',
+            dataType: 'json',
+            beforeSend: function(request) {
+                request.setRequestHeader("apikey", 'e2376cfbe3b27dff923ed61698839a67');
+            }
+        })
+        .done(function(data) {
+            // var txt = data.showapi_res_body.contentlist[0].text;
+            // var title = data.showapi_res_body.contentlist[0].title;
+            contentlist = data.showapi_res_body.contentlist;
+            // console.log(contentlist);
+            // $('#joke_text').html(txt);
+            // $('#joke_title').html(title);
+            var content = '';
+            for (var i = 0; i < contentlist.length; i++) {
+            	console.log(contentlist[i]);
+            	content = content +'<h3>'+contentlist[i].title+'</h3>';
+            	content = content +'<p>'+contentlist[i].text+'</p>';
+            };
+            	$('#content').html(content);
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    </script>
+</body>
+
+</html>
