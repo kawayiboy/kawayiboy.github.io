@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Happy New Year</title>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap.min.css">
+	<link href="css/typewriter-default.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="js/jquery-2.0.3.min.js"></script>
+	<script type="text/javascript" src="js/garden.js"></script>
+    <script type="text/javascript" src="js/functions2.js"></script>
+    <!--<script type="text/javascript" src="./dist/js/bootstrap.min.js"></script>-->
+</head>
+
+<body>
+	<div class="section">
+        <div class="container">
+            <div class="row" id='content'>
+
+	<div id="mainDiv">
+		<div id="content">
+			<div id="code">
+				<!-- <span id='toname' class="error"></span> -->
+				<!-- <span class="error"> -->
+					<span class="error"/>To:</span><span id='toname' class="error">某某</span><br/>
+					<br />
+					<span class="error"><span class="space"/>羊辞旧岁山佩玉<br />
+						<span class="space"/>猴接新年日流金<br /></span>
+					<span class="error">
+					<span class="space"/>祝你在新的一年里<br />
+					<span class="space"/>身体健康<br />
+					<span class="space"/>万事如意<br />
+					<span class="space"/>新年快乐<br />
+					</span>
+					<br />
+					<span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/>卢滕敬上<br />
+					<span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/>于丙申猴年<br />
+				<!-- </span> -->
+			</div>
+			<canvas id="garden"></canvas>
+		</div>
+	</div>
+
+</div>
+</div>
+</div>
+
+	<script type="text/javascript">
+	     //方法一：
+        //获取url中的参数
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return decodeURI(r[2]); return null; //返回参数值
+        }
+
+
+		// $( window ).load(function() {
+
+        //     //方法二：
+        //     (function ($) {
+        //         $.getUrlParam = function (name) {
+        //             var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        //             var r = window.location.search.substr(1).match(reg);
+        //             if (r != null) return decodeURI(r[2]); return null;
+        //         }
+        //     })(jQuery);
+
+        //     //方法二：
+        //     // var xx = $.getUrlParam('reurl');
+        //     //方法一：
+        //     var xx = getUrlParam('reurl');
+
+
+        //     console.log(xx);
+        //     $('#toname').text('test');
+
+        // });
+
+		var xx = getUrlParam('name');
+		if(xx&&xx.length>0)
+			document.getElementById('toname').textContent=xx;
+
+		if (!document.createElement('canvas').getContext) {
+			// var xx = getUrlParam('reurl');
+			// // $('#toname').html('test');
+			// document.getElementById('toname').textContent=String(xx);
+
+			var msg = document.createElement("div");
+			msg.id = "errorMsg";
+			msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
+			document.body.appendChild(msg);
+			$("#code").css("display", "none")
+		    document.execCommand("stop");
+		} else {
+			adjustCodePosition();
+			$("#code").typewriter();
+		}
+	</script>
+</body>
+</html>
