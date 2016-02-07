@@ -42,7 +42,7 @@
 					<span class="space"/>新年快乐<br />
 					</span>
 					<br />
-					<span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/>卢滕敬上<br />
+					<span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span id='fromname' class="error">某某</span>敬上<br />
 					<span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/><span class="space"/>于丙申猴年<br />
 				<!-- </span> -->
 			</div>
@@ -89,6 +89,10 @@
 		var xx = getUrlParam('name');
 		if(xx&&xx.length>0)
 			document.getElementById('toname').textContent=xx;
+		
+		var from = getUrlParam('from');
+		if(from&&from.length>0)
+			document.getElementById('fromname').textContent=from;
 
 		if (!document.createElement('canvas').getContext) {
 			// var xx = getUrlParam('reurl');
