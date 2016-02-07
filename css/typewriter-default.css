@@ -96,10 +96,17 @@ body {
 
 #code .error{
 	color: #c7254e;
-	font-size: 20px;
-	font-weight: 20px;
+	font-size: 45px;
+	font-weight: 45px;
 }
-
+/*@media (max-width: 450px) {
+    #code .error {
+        color: #c7254e;
+        font-size: 65px;
+        font-weight: 65px;
+    }
+}
+*/
 #copyright {
     margin-top: 10px;
     text-align: center;
