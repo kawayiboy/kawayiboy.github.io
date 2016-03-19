@@ -10,6 +10,7 @@
     <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="jquery-qrcode/src/jquery.qrcode.js"></script>
     <script type="text/javascript" src="jquery-qrcode/src/qrcode.js"></script>
+
 </head>
 
 <body>
@@ -40,7 +41,24 @@
                 </div>
             </div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a id="facebook-link" title="Share on Facebook">
+                        <img src="assets/Share/Share_Facebook.svg" alt="share icon">
+                    </a>
+                    <a data-via="Microsoft" id="twitter-link" title="Share on Twitter">
+                        <img src="assets/Share/Share_Twitter.svg" />
+                    </a>
+                    <a title="Email link"><img id="email-icon" src="assets/Share/Share_Email.svg" /></a>
+                    <a title="Copy link"><img id="copy-icon" src="assets/Share/Share_CopyLink.svg" /></a>
+                </div>
+            </div>
+        </div>
+
     </div>
+    <script type="text/javascript" src="./js/Share.js"></script>
     <script>
     function upsert_qrcode(url_txt){
         $('#qrcodeCanvas').html("");
