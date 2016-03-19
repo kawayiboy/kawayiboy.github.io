@@ -51,13 +51,64 @@
                     <a data-via="Microsoft" id="twitter-link" title="Share on Twitter">
                         <img src="assets/Share/Share_Twitter.svg" />
                     </a>
-                    <a title="Email link"><img id="email-icon" src="assets/Share/Share_Email.svg" /></a>
+                    <a target="_top" title="Email link"><img id="email-icon" src="assets/Share/Share_Email.svg" /></a>
                     <a title="Copy link"><img id="copy-icon" src="assets/Share/Share_CopyLink.svg" /></a>
+
+
+                    <!-- JiaThis Button BEGIN -->
+
+
+
                 </div>
             </div>
+
         </div>
 
+ <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center jiathis_style">
+                                <a class="jiathis_button_tsina">新浪微博</a>
+                                <a class="jiathis_button_weixin">微信</a>
+                        </div>
+                    </div>
+                    </div>
     </div>
+
+
+<script type="text/javascript">
+function getservice(evt) {
+    alert('用户将当前网页分享到了：'+evt.data.service);
+}
+var jiathis_config = {
+    boldNum:0,
+    siteNum:7,
+    showClose:false,
+    sm:"t163,kaixin001,renren,douban,tsina,tqq,tsohu",
+    imageUrl:"http://v2.jiathis.com/code/images/r5.gif",
+    imageWidth:26,
+    marginTop:150,
+    url:"http://kawayiboy.github.io/qrcodegen.html",
+    title:"http://kawayiboy.github.io/qrcodegen.html",
+    pic:"自定义分享的图片连接地址",
+    data_track_clickback:true,
+    appkey:{
+        "tsina":"743521851",
+        "tqq":"您网站的腾讯微博APPKEY",
+        "tpeople":"您网站的人民微博APPKEY"
+    },
+    ralateuid:{
+        "tsina":"1581126447"
+    },
+    "shortUrl":false,
+    // evt:{
+    //     "share":"getservice"
+    // }
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=2089783" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+
     <script type="text/javascript" src="./js/Share.js"></script>
     <script>
     function upsert_qrcode(url_txt){
