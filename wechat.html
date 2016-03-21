@@ -3,25 +3,107 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
-    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
-    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="./js/jweixin-1.0.0.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha1.js"></script>
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/hmac-sha1.js"></script>
+<script src="https://raw.github.com/gorbiz/mobile-console.log/master/console.js" type="text/javascript"></script>
 </head>
 
 <body>
+    <p>wechat</p>
     <script>
-    $(document).ready(function() {
+    function ajaxCORS(){
+        $.ajaxPrefilter(function(options) {
+            if (options.crossDomain && jQuery.support.cors) {
+                var http = (window.location.protocol === 'http:' ? 'http:' : 'https:');
+                options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
+                //options.url = "http://cors.corsproxy.io/url=" + options.url;
+            }
+        });
+    }
 
+    function wxInit(ticket){
+        var timestamp = new Date().getTime();
+        console.log(timestamp);
+        var noncestr='Wm3WZYTPz0wzccnW';
+        var url=window.location.href;
+        var string1 = 'jsapi_ticket='+ticket+'&noncestr='+noncestr+'&timestamp='+timestamp+'&url='+url;
+        console.log(string1);
+        var sign = CryptoJS.SHA1(string1);
+        console.log(sign);
         wx.config({
             debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
             appId: 'wx17502c6fc5a7fe38', // 必填，公众号的唯一标识
-            timestamp: , // 必填，生成签名的时间戳
-            nonceStr: '', // 必填，生成签名的随机串
-            signature: '', // 必填，签名，见附录1
-            jsApiList: [] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+            timestamp: timestamp, // 必填，生成签名的时间戳
+            nonceStr: noncestr, // 必填，生成签名的随机串
+            signature: sign, // 必填，签名，见附录1
+            jsApiList: ['onMenuShareTimeline'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
         });
+
+        wx.ready(function(){
+            console.log('done');
+            wx.onMenuShareTimeline({
+                title: 'test', // 分享标题
+                link: 'www.google.com', // 分享链接
+                imgUrl: '', // 分享图标
+                success: function () { 
+                    // 用户确认分享后执行的回调函数
+                    console.log('shared timelinie');
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        });
+
+        wx.error(function(res){
+            console.log(res);
+        });
+    }
+
+    $(document).ready(function() {
+        ajaxCORS();
+
+
+        // appId:wx17502c6fc5a7fe38
+        // appSecret:84c5c0f624b9d39b205e9c49f9fbec86
+        // token:NJTULso9Uz0naJkfUrVtep4N8WC212j1Sxm_-4dYMMrOnkcGGDseJK1CmipDQaikLnEihpM-EamL3eNgb-ok1otnDh07jad9UfQvzBBx1D4FAIgABAYTB
+        // wechat Id:gh_67dc230025e3
+
+        // /token
+        //https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx17502c6fc5a7fe38&secret=84c5c0f624b9d39b205e9c49f9fbec86
+        //jsapi_ticket
+        //https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=vCCXHxvLJCyHnzY9OEfU70hiWzj69CjjLH-_2BN8AKO_wTjJiA8yWw5udQRwfnq52zgv-7_gaU_uTKm2zosZTaF4kI770OXYlwivxT9bLTUKLThABAOPX&type=jsapi
+
+        var appId='wx17502c6fc5a7fe38';
+        var appSecret='84c5c0f624b9d39b205e9c49f9fbec86';
+        var ticket = '';
+
+        $.ajax({
+            url: 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' + appId + '&secret=' + appSecret,
+            type: 'GET',
+            crossDomain: true,
+        }).done(function(data) {
+                console.log(data);
+            var token = data.access_token;
+            $.ajax({
+                url: 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=' + token+'&type=jsapi',
+                type: 'GET',
+                crossDomain: true,
+            }).done(function(data) {
+                console.log(data);
+                ticket = data.ticket;
+                wxInit(ticket);
+            }).fail(function(e) {
+                console.log(e);
+            });
+
+        }).fail(function(e) {
+            console.log(e);
+        });
+
+
     });
     </script>
 </body>
