@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	
+<div class="section">
+    <div class="container">
+        <div class="row text-center">
+            <h3 id='analysis'></h3>
+        </div>
+    </div>
+</div>
+
+<script>
+    function GetURLParameter(sParam)
+	{
+	    var sPageURL = decodeURIComponent(window.location.search.substring(1));
+	    var sURLVariables = sPageURL.split('&');
+	    for (var i = 0; i < sURLVariables.length; i++) 
+	    {
+	        var sParameterName = sURLVariables[i].split('=');
+	        if (sParameterName[0] == sParam) 
+	        {
+	            return sParameterName[1];
+	        }
+	    }
+	}
+
+	var url = GetURLParameter('url').toLowerCase();
+	if(url){
+		if(localStorage.getItem(url)) {
+			localStorage.setItem(url,Number(localStorage.getItem(url))+1);
+		} else {
+			localStorage.setItem(url,Number(1));
+		}
+
+		var content = url+':'+localStorage[url].toString();
+		$('#analysis').html(content);
+		if (url.indexOf('http:') < 0) {
+	        url = "http://" + url;
+	    }
+		setTimeout(function(){
+		  window.location.replace(url);
+		}, 3000);		
+	}
+
+</script>
+</body>
+</html>
