@@ -10,7 +10,7 @@
     <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	
+
 <div class="section">
     <div class="container">
         <div class="row text-center">
@@ -19,7 +19,7 @@
     </div>
 </div>
 
-<script>
+<script type="text/javascript">
     function GetURLParameter(sParam)
 	{
 	    var sPageURL = decodeURIComponent(window.location.search.substring(1));
@@ -35,7 +35,7 @@
 	}
 
 	var url = GetURLParameter('url').toLowerCase();
-	if(url){
+	if(url) {
 		if(localStorage.getItem(url)) {
 			localStorage.setItem(url,Number(localStorage.getItem(url))+1);
 		} else {
@@ -50,6 +50,8 @@
 		setTimeout(function(){
 		  window.location.replace(url);
 		}, 3000);		
+	} else{
+		$('#analysis').html('no parameter url');
 	}
 
 </script>
