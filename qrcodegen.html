@@ -10,7 +10,6 @@
     <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" src="jquery-qrcode/src/jquery.qrcode.js"></script>
     <script type="text/javascript" src="jquery-qrcode/src/qrcode.js"></script>
-
 </head>
 
 <body>
@@ -69,6 +68,7 @@
                     <div class="col-md-12 text-center jiathis_style">
                         <a class="jiathis_button_tsina">新浪微博</a>
                         <a class="jiathis_button_weixin">微信</a>
+                        <p class="text-muted">You can turn on url hit count by adding ?count=true in url</p>
                     </div>
                 </div>
             </div>
@@ -109,6 +109,7 @@ var jiathis_config = {
 
 
     <script type="text/javascript" src="./js/Share.js"></script>
+    <script type="text/javascript" src="./js/utils.js"></script>
     <script>
     function upsert_qrcode(url_txt){
         $('#qrcodeCanvas').html("");
@@ -125,10 +126,13 @@ var jiathis_config = {
 
     $('#gen_btn').click(function() {
         var url_txt = $('#url_text').val();
-        // if (url_txt.indexOf('http:') < 0) {
-        //     url_txt = "http://" + url_txt;
-        // }
-        url_txt = 'http://kawayiboy.github.io/qranalytics.html?url='+url_txt;
+        if (url_txt.indexOf('http:') < 0) {
+            url_txt = "http://" + url_txt;
+        }
+
+        if (getParameterByName('count')) {
+            url_txt = 'http://kawayiboy.github.io/qranalytics.html?url='+url_txt;
+        }
         upsert_qrcode(url_txt);
         $('#urls_list').append("<li ><a href='#' onclick='url_click(this)'>" + url_txt + '</a></li>');
 

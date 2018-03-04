@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+    <script type="text/javascript" src="./js/utils.js"></script>
+    <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+    section {
+        padding: 10px;
+    }
+
+    section > div {
+        padding: 5px;
+        width: 100%;
+    }
+
+    div.new {
+        background-color: rgb(230,230,230);
+        border-bottom: 1px dotted #ccc;
+        display: none;
+    }
+
+    input {
+        border: 1px solid #eee;
+        border-radius: 4px;
+        line-height: 1.5em;
+        padding: 4px;
+    }
+
+    a.rowDelete {
+        cursor: pointer;
+        padding-left: 9px;
+    }
+
+    .hidden {
+        display: none
+    }
+    </style>
+</head>
+
+<body>
+    <div class="alert alert-danger hidden" id='errormessage'>
+      Input must have value.
+    </div>
+    <div class="section">
+        <div class="container" id="container">
+<!--             <div id="initRow" class="row">
+                <input name="multifield" placeholder="Value">
+            </div> -->
+            <div class="col-sm-2" id='initRow'>
+                <button type="submit" class="btn btn-default" id="add_row_btn">Add</button>
+                <button type="submit" class="btn btn-default" id="gen_btn">Create</button>
+            </div>
+            <div class="row text-center">
+                <h3 id='result'></h3>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var inputId = 0;
+        var inputs = []
+        var validInputs = []
+        // var removedIds = []
+
+        function add_edit_row(idx){
+            return '<div id="input'+idx+'" class="row">'
+                    +'<input name="multifield" placeholder="Value">'
+                    +'<a class="rowDelete" id="delete'+idx+'"><img src="http://i.imgur.com/ZSoHl.png"></a>'
+                    +'</div>';
+        }
+
+        $('#gen_btn').click(function() {
+            var id = Math.floor(Math.random() * validInputs.length);
+            document.getElementById("result").textContent = inputs[validInputs[id]];
+        });
+
+        function addRow(initRow) {
+            var newid = "input"+inputId.toString();
+
+            var newRow = htmlToElement(add_edit_row(inputId.toString()));
+            var container = document.getElementById("container");
+            container.insertBefore(newRow, document.getElementById("initRow"));
+
+            $('#'+newid).on('input', function(event) {
+                var target = event.currentTarget;
+                var idstr = target.id;
+                var value = target.firstElementChild.value;
+                idstr = idstr.substr(5);
+                var id = parseInt(idstr);
+
+                if(value === ''){
+                    $('#errormessage').removeClass('hidden');
+                } else if(!$('#errormessage').hasClass('hidden')){
+                    $('#errormessage').addClass('hidden');
+                }
+
+                inputs[id] = value;
+            });
+
+            $('#delete'+inputId.toString()).click(function() {
+                removeRow(newid);
+            });
+
+            validInputs.push(inputId);
+
+            inputId = inputId + 1;
+        }
+
+        function removeRow(idstr) {
+            idstr = idstr.substr(5);
+            var id = parseInt(idstr);
+            var idid = validInputs.indexOf(id);
+            $('#'+id.toString()).text('');
+            validInputs.splice(idid,1);
+
+            document.getElementById("container").removeChild(document.getElementById("input"+idstr));
+        }
+
+        $(function () {
+            var initRow = $('#initRow'),
+                section = initRow.parent('section');
+            $('#add_row_btn').click(function() {
+                addRow(initRow);
+            });
+        });
+    </script>
+</body>
