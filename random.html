@@ -52,15 +52,28 @@
 <!--             <div id="initRow" class="row">
                 <input name="multifield" placeholder="Value">
             </div> -->
-            <div class="col-sm-2" id='initRow'>
+            <div class="col" id='initRow'>
                 <button type="submit" class="btn btn-default" id="add_row_btn">Add</button>
+                <button type="submit" class="btn btn-default" id="add_yes_no_btn">YesOrNo</button>
                 <button type="submit" class="btn btn-default" id="gen_btn">Create</button>
             </div>
             <div class="row text-center">
                 <h3 id='result'></h3>
             </div>
+
+
+            <h3 style="color:#40AA53">抽奖结果</h3>
+            <div id="Result" style="color:#40AA53">
+                <span id="ResultNum">0</span>
+            </div>
+            <div id="Button">
+                <input type='button' id="btn" value='begin' onclick='beginRndNum(this)'/>
+            </div>
+
         </div>
     </div>
+
+
 
     <script type="text/javascript">
         var inputId = 0;
@@ -68,9 +81,10 @@
         var validInputs = []
         // var removedIds = []
 
-        function add_edit_row(idx){
+        function add_edit_row(idx, setValue){
+            var defaultVal = !!setValue ? 'value="'+setValue+'"' : 'placeholder="Value"';
             return '<div id="input'+idx+'" class="row">'
-                    +'<input name="multifield" placeholder="Value">'
+                    +'<input name="multifield" '+defaultVal+'>'
                     +'<a class="rowDelete" id="delete'+idx+'"><img src="http://i.imgur.com/ZSoHl.png"></a>'
                     +'</div>';
         }
@@ -80,12 +94,26 @@
             document.getElementById("result").textContent = inputs[validInputs[id]];
         });
 
-        function addRow(initRow) {
+        $('#add_yes_no_btn').click(function() {
+            inputs = [];
+            inputId = 0;
+            validInputs = [];
+            $(this).prop("disabled",true);
+
+            addRow('Yes');
+            addRow('No');
+        });
+
+        function addRow(setValue) {
             var newid = "input"+inputId.toString();
 
-            var newRow = htmlToElement(add_edit_row(inputId.toString()));
+            var newRow = htmlToElement(add_edit_row(inputId.toString(), setValue));
             var container = document.getElementById("container");
             container.insertBefore(newRow, document.getElementById("initRow"));
+
+            if (!!setValue) {
+                inputs[inputId] = setValue;
+            }
 
             $('#'+newid).on('input', function(event) {
                 var target = event.currentTarget;
@@ -126,8 +154,41 @@
             var initRow = $('#initRow'),
                 section = initRow.parent('section');
             $('#add_row_btn').click(function() {
-                addRow(initRow);
+                addRow();
             });
         });
+
+        var g_Interval = 10;
+        var g_PersonCount = 500;
+        var g_Timer;
+        var running = false;
+        function beginRndNum(trigger){
+            if(running){
+                running = false;
+                clearTimeout(g_Timer);
+                $(trigger).val("begin");
+                $('#ResultNum').css('color','red');
+            }
+            else{
+                running = true;
+                $('#ResultNum').css('color','black');
+                $(trigger).val("stop");
+                beginTimer();
+            }
+        }
+
+        function updateRndNum(){
+            var id = Math.floor(Math.random()*validInputs.length);
+            $('#ResultNum').html(inputs[validInputs[id]]);
+        }
+
+        function beginTimer(){
+            g_Timer = setTimeout(beat, g_Interval);
+        }
+
+        function beat() {
+            g_Timer = setTimeout(beat, g_Interval);
+            updateRndNum();
+        }
     </script>
 </body>

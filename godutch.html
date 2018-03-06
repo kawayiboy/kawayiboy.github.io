@@ -1,0 +1,147 @@
+<html>
+   <head>
+      <title></title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <script type="text/javascript" src="./js/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="./js/bootstrap.3.3.4.min.js"></script>
+      <link href="./css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link href="./css/pingendo-bootstrap.min.css" rel="stylesheet" type="text/css">
+   </head>
+   <body>
+      <div class="section">
+         <div class="container">
+          <div class="row text-center">
+            <form onsubmit="onSubmit(); return false;">
+               <input type="text" id="nameinput">
+               <input type="submit" value="Add">
+            </form>
+            <ul id="namelist"></ul>
+            <form onsubmit="onSubmitExp(); return false;">
+               <select id="nameselect"></select>
+               <p>cost:</p>
+               <input type="text" id="expinput">
+               <p>description:</p>
+               <input type="text" id="descriptioninput" placeholder="cost description">
+               <input type="submit" value="Add">
+            </form>
+            <table id="explist" class="table">
+            </table>
+            <button id='calcbtn'>Caculate</button>
+            <div id='res'></div>
+            </div>
+         </div>
+      </div>
+      <script>
+         var names = [];
+         var expmap = {};
+         var totalexp = 0;
+         var calced = false;
+         function onSubmit() {
+           var input = $("#nameinput");
+           names.push(input.val());
+           var inputval = input.val();
+           $('#namelist').append("<li>"+inputval+"</li>")
+           $('#nameselect').append('<option value="'+inputval+'">'+inputval+'</option>' )
+           expmap[inputval] = 0;
+         }
+         
+         function checkValue(expval) {
+           if(!$.isNumeric(expval)){
+               alert('Please type in a valid number');
+               return false;
+           } else if (parseInt(expval)<=0) {
+               alert('Please type in a positive number');
+               return false;
+           }
+           return true;
+         }
+         function onSubmitExp(){
+          var exp = $("#expinput");
+          var expval = exp.val();
+           if(!checkValue(expval)) {
+               return;
+           }
+         
+          var input = $("#descriptioninput");
+          var inputval = input.val();
+          var ppl = $('#nameselect').val();
+           if(!ppl) {
+             alert('Please select a people for the cost');
+             return;
+           }
+         
+          $('#explist').append("<tr><td>"+ppl+"</td><td>$"+expval+"</td><td>"+inputval+"</tr></tr>");
+          var expvalnum = parseInt(expval);
+          totalexp+=expvalnum;
+          expmap[ppl]+=expvalnum;
+          calced = false;
+         }
+         
+         $('#calcbtn').click(function() {
+          if(calced || totalexp === 0)
+            return;
+         
+           calced = true;
+           $('#res').html('');
+           // http://www.cnblogs.com/AndyJee/p/4963349.html
+           var pay = []
+           var receive = []
+          var eachexp = totalexp/names.length;
+         
+           var all = new Array(names.length);
+          for (var i = 0; i < names.length; i++) {
+             all[i] = expmap[names[i]];
+            all[i] = all[i] - eachexp;
+             if(all[i]<0)
+               pay.push(i);
+             if(all[i]>0)
+               receive.push(i);
+          }
+         
+           var row=pay.length;
+           var col=receive.length;
+           var table = new Array(row);
+           for (var i = 0; i < row; i++) {
+             table[i] = new Array(col);
+           }
+         
+           var from,to;
+           for(var i=0;i<row;i++){
+             for(var j=0;j<col;j++){
+               from=pay[i];
+               to=receive[j];
+         
+               if(all[from] === 0)
+                 break;
+         
+               if(all[to] === 0)
+                 continue;
+         
+               if(all[from]+all[to]>=0){
+                   table[i][j]=-all[from];
+                   all[to]=all[from]+all[to];
+                   all[from]=0.0;
+               }
+               else{
+                   table[i][j]=all[to];
+                   all[from]=all[from]+all[to];
+                   all[to]=0.0;
+               }
+             }
+           }
+
+           for(var i=0;i<row;i++){
+               for(var j=0;j<col;j++){
+                   if(table[i][j] !== 0) {
+                       $('#res').append('<p>'+names[pay[i]] + ' pay ' + names[receive[j]] +' $'+(table[i][j].toString())+'</p>');
+                   }
+               }
+           }
+         
+          calced = false;
+         });
+      </script>
+   </body>
+</html>
