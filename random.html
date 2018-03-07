@@ -95,6 +95,9 @@
         });
 
         $('#add_yes_no_btn').click(function() {
+            for (var i = 0; i < inputId; i++) {
+                $('#input'+i.toString()).remove();
+            };
             inputs = [];
             inputId = 0;
             validInputs = [];
