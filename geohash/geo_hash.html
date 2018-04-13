@@ -82,12 +82,10 @@
         }
 
         $(document).ready(function() {
-            // show source code
-            $.get('https://cdn.rawgit.com/chrisveness/latlon-geohash/v1.1.0/latlon-geohash.js', function(data) {
-                var src = data.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-                $('#source-code').html(src);
-                prettyPrint();
-            }, 'text');
+            if (location.protocol != 'https:')
+            {
+             location.href = 'https:' + window.location.href.substring(window.location.protocol.length);
+            }
 
             $('#lat,#lon').change( function() {
                 // encode geohash
