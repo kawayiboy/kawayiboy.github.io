@@ -1,80 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-<url>
-    <loc>http://kawayiboy.github.io/</loc>
-    <lastmod>2019-02-26T03:29:48+00:00</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/godutch.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/html5_websql_todolist.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
+  <url>
     <loc>http://kawayiboy.github.io/index.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/videocapture.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/html5_websql_todolist.html</loc>
+  </url>
+  <url>
     <loc>http://kawayiboy.github.io/joke.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/lyrics.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/proxy.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/qranalytics.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
+  </url>
+  <url>
     <loc>http://kawayiboy.github.io/qrcodegen.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/random.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/stockconfig.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/typewriter.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/wechat.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/carousel/index.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/geohash/geo_hash.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/jquery-qrcode/index.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/jquery-qrcode/examples/basic.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
-    <loc>http://kawayiboy.github.io/jquery-qrcode/examples/demo.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-<url>
+  </url>
+  <url>
     <loc>http://kawayiboy.github.io/jump/jump.html</loc>
-    <lastmod>2019-02-26</lastmod>
-</url>
-
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/carousel/index.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/typewriter.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/random.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/jquery-qrcode/index.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/jquery-qrcode/examples/basic.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/jquery-qrcode/examples/demo.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/wechat.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/coronavirus.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/godutch.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/geohash/geo_hash.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/qranalytics.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/proxy.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/stockconfig.html</loc>
+  </url>
+  <url>
+    <loc>http://kawayiboy.github.io/lyrics.html</loc>
+  </url>
 </urlset>
