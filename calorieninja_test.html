@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AJAX POST Request</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+</head>
+
+<body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="container text-center">
+        <h1>Send AJAX POST Request</h1>
+        <div class="input-group mb-3">
+            <input type="text" id="inputData" class="form-control" placeholder="Enter data">
+            <div class="input-group-append">
+                <button id="sendButton" class="btn btn-primary" type="button">Send</button>
+            </div>
+        </div>
+        <!-- Add a div to display the response -->
+        <div id="response" class="mt-4"></div>
+        <div id="foodTable" class="container mt-4">
+            <div class="row">
+              <div class="col">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                    <tr>
+                      <th>Name</th>
+                      <th>Calories</th>
+                      <th>Serving Size (g)</th>
+                      <th>Fat Total (g)</th>
+                      <th>Fat Saturated (g)</th>
+                      <th>Protein (g)</th>
+                      <th>Sodium (mg)</th>
+                      <th>Potassium (mg)</th>
+                      <th>Cholesterol (mg)</th>
+                      <th>Carbohydrates Total (g)</th>
+                      <th>Fiber (g)</th>
+                      <th>Sugar (g)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!-- Table rows will be dynamically generated here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("#foodTable").hide();
+            // Function to render the table component
+            function renderTable(items) {
+                const tableBody = $("#foodTable tbody");
+                tableBody.empty();
+
+                items.forEach(item => {
+                    const tableRow = $("<tr>");
+                    tableRow.append(`<td>${item.name}</td>`);
+                    tableRow.append(`<td>${item.calories}</td>`);
+                    tableRow.append(`<td>${item.serving_size_g}</td>`);
+                    tableRow.append(`<td>${item.fat_total_g}</td>`);
+                    tableRow.append(`<td>${item.fat_saturated_g}</td>`);
+                    tableRow.append(`<td>${item.protein_g}</td>`);
+                    tableRow.append(`<td>${item.sodium_mg}</td>`);
+                    tableRow.append(`<td>${item.potassium_mg}</td>`);
+                    tableRow.append(`<td>${item.cholesterol_mg}</td>`);
+                    tableRow.append(`<td>${item.carbohydrates_total_g}</td>`);
+                    tableRow.append(`<td>${item.fiber_g}</td>`);
+                    tableRow.append(`<td>${item.sugar_g}</td>`);
+
+                    tableBody.append(tableRow);
+                });
+                $("#foodTable").show();
+            }
+
+
+            $("#sendButton").click(function () {
+                // Get the data from the input box
+                const inputData = $("#inputData").val();
+
+                // // Create the data object to be sent in the AJAX request
+                // const data = { data: inputData };
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api.calorieninjas.com/v1/nutrition?query=' + inputData,
+                    headers: { 'X-Api-Key': CryptoJS.AES.decrypt("U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==", "demo").toString(CryptoJS.enc.Utf8) },
+                    contentType: 'application/json',
+                    success: function (result) {
+                        renderTable(result.items);
+                    },
+                    error: function ajaxError(jqXHR) {
+                        $("#response").text("Error: " + jqXHR.responseText);
+                    }
+                });
+
+            });
+        });
+    </script>
+</body>
+
+</html>

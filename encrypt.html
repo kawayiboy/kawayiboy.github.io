@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>AJAX POST Request</title>
+    <!-- Add Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+        integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+</head>
+
+<body class="d-flex align-items-center justify-content-center vh-100">
+    <div class="container text-center">
+        <h1>Encrpyt example</h1>
+            <div class="form-group">
+                <label for="inputData">Text to encrypt</label>
+                <input type="text" class="form-control" id="inputData">
+            </div>
+            <div class="form-group">
+                <label for="secret-word">Secret word</label>
+                <input type="text" class="form-control" id="secret-word" placeholder="demo" value="demo">
+            </div>
+            <button class="btn btn-primary" id="encrpytButton">Encrpyt</button>
+        <div id="response" class="mt-4"></div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $("#encrpytButton").click(function () {
+                $('#response').empty();
+                var encrypted = CryptoJS.AES.encrypt($('#inputData').val(), $('#secret-word').val());
+                console.log(encrypted.toString());
+
+                var decrypted = CryptoJS.AES.decrypt("U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==", "demo");
+                console.log(decrypted.toString(CryptoJS.enc.Utf8));
+
+
+                $('#response').append(`<p>${encrypted}</p>`)
+            });
+        });
+    </script>
+</body>
