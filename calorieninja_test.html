@@ -7,7 +7,8 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Include jQuery library -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js" integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+        integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
 </head>
 
 <body class="d-flex align-items-center justify-content-center vh-100">
@@ -19,39 +20,142 @@
                 <button id="sendButton" class="btn btn-primary" type="button">Send</button>
             </div>
         </div>
-        <!-- Add a div to display the response -->
-        <div id="response" class="mt-4"></div>
+
+
         <div id="foodTable" class="container mt-4">
             <div class="row">
-              <div class="col">
-                <table class="table table-bordered">
-                    <thead class="thead-dark">
-                    <tr>
-                      <th>Name</th>
-                      <th>Calories</th>
-                      <th>Serving Size (g)</th>
-                      <th>Fat Total (g)</th>
-                      <th>Fat Saturated (g)</th>
-                      <th>Protein (g)</th>
-                      <th>Sodium (mg)</th>
-                      <th>Potassium (mg)</th>
-                      <th>Cholesterol (mg)</th>
-                      <th>Carbohydrates Total (g)</th>
-                      <th>Fiber (g)</th>
-                      <th>Sugar (g)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Table rows will be dynamically generated here -->
-                  </tbody>
-                </table>
-              </div>
+                <div class="col">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Calories</th>
+                                <th>Serving Size (g)</th>
+                                <th>Fat Total (g)</th>
+                                <th>Fat Saturated (g)</th>
+                                <th>Protein (g)</th>
+                                <th>Sodium (mg)</th>
+                                <th>Potassium (mg)</th>
+                                <th>Cholesterol (mg)</th>
+                                <th>Carbohydrates Total (g)</th>
+                                <th>Fiber (g)</th>
+                                <th>Sugar (g)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Table rows will be dynamically generated here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
-          </div>
+        </div>
+
+        <h1>Get Recipe</h1>
+        <div class="input-group mb-3">
+            <input type="text" id="foodRecipeInput" class="form-control" placeholder="Enter data">
+            <div class="input-group-append">
+                <button id="recipeButton" class="btn btn-primary" type="button">Send</button>
+            </div>
+        </div>
+        <div id="response" class="mt-4"></div>
     </div>
 
+
     <script>
-        const _0x44ef91=_0x2d5c;function _0x5553(){const _0x26df20=['name','80GlYqiZ','118852aueaij','<tr>','carbohydrates_total_g','cholesterol_mg','763119TMmtsP','ajax','hide','35boXIBw','sodium_mg','Utf8','6096654poAsTo','</td>','application/json','demo','potassium_mg','enc','append','click','3531710qfWxAp','fat_saturated_g','AES','GET','calories','<td>','4561962JdaHej','ready','decrypt','protein_g','#response','fiber_g','forEach','responseText','show','#sendButton','#foodTable','#inputData','text','770218ahviVc','items','463712pzoPds','1UXoday'];_0x5553=function(){return _0x26df20;};return _0x5553();}function _0x2d5c(_0x1111f7,_0x1d1c0e){const _0x5553a8=_0x5553();return _0x2d5c=function(_0x2d5c9d,_0x7f1fab){_0x2d5c9d=_0x2d5c9d-0xfd;let _0x27a296=_0x5553a8[_0x2d5c9d];return _0x27a296;},_0x2d5c(_0x1111f7,_0x1d1c0e);}(function(_0x3b41ca,_0x5d97cc){const _0x536fb7=_0x2d5c,_0x2aa284=_0x3b41ca();while(!![]){try{const _0x47850d=parseInt(_0x536fb7(0x109))/0x1*(parseInt(_0x536fb7(0x106))/0x2)+-parseInt(_0x536fb7(0x110))/0x3+parseInt(_0x536fb7(0x10c))/0x4*(-parseInt(_0x536fb7(0x10b))/0x5)+parseInt(_0x536fb7(0x124))/0x6+-parseInt(_0x536fb7(0x113))/0x7*(-parseInt(_0x536fb7(0x108))/0x8)+-parseInt(_0x536fb7(0x116))/0x9+parseInt(_0x536fb7(0x11e))/0xa;if(_0x47850d===_0x5d97cc)break;else _0x2aa284['push'](_0x2aa284['shift']());}catch(_0x2ff47a){_0x2aa284['push'](_0x2aa284['shift']());}}}(_0x5553,0x5d138),$(document)[_0x44ef91(0x125)](function(){const _0x177f0e=_0x44ef91;$('#foodTable')[_0x177f0e(0x112)]();function _0x15dac3(_0x7c15b7){const _0xb91ba9=_0x177f0e,_0x2f5344=$('#foodTable\x20tbody');_0x2f5344['empty'](),_0x7c15b7[_0xb91ba9(0xff)](_0x14a013=>{const _0x5346b6=_0xb91ba9,_0x1a2cf=$(_0x5346b6(0x10d));_0x1a2cf[_0x5346b6(0x11c)]('<td>'+_0x14a013[_0x5346b6(0x10a)]+_0x5346b6(0x117)),_0x1a2cf['append']('<td>'+_0x14a013[_0x5346b6(0x122)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013['serving_size_g']+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)]('<td>'+_0x14a013['fat_total_g']+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0x11f)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0x127)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0x114)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)]('<td>'+_0x14a013[_0x5346b6(0x11a)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0x10f)]+_0x5346b6(0x117)),_0x1a2cf['append'](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0x10e)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013[_0x5346b6(0xfe)]+_0x5346b6(0x117)),_0x1a2cf[_0x5346b6(0x11c)](_0x5346b6(0x123)+_0x14a013['sugar_g']+_0x5346b6(0x117)),_0x2f5344[_0x5346b6(0x11c)](_0x1a2cf);}),$(_0xb91ba9(0x103))[_0xb91ba9(0x101)]();}$(_0x177f0e(0x102))[_0x177f0e(0x11d)](function(){const _0x1c49f5=_0x177f0e,_0xa092e9=$(_0x1c49f5(0x104))['val']();$[_0x1c49f5(0x111)]({'method':_0x1c49f5(0x121),'url':'https://api.calorieninjas.com/v1/nutrition?query='+_0xa092e9,'headers':{'X-Api-Key':CryptoJS[_0x1c49f5(0x120)][_0x1c49f5(0x126)]('U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==',_0x1c49f5(0x119))['toString'](CryptoJS[_0x1c49f5(0x11b)][_0x1c49f5(0x115)])},'contentType':_0x1c49f5(0x118),'success':function(_0x209b48){const _0x1267e8=_0x1c49f5;_0x15dac3(_0x209b48[_0x1267e8(0x107)]);},'error':function _0x1e02d5(_0x2933dc){const _0x7ffd78=_0x1c49f5;$(_0x7ffd78(0xfd))[_0x7ffd78(0x105)]('Error:\x20'+_0x2933dc[_0x7ffd78(0x100)]);}});});}));
+        $(document).ready(function () {
+            $("#foodTable").hide();
+            // Function to render the table component
+            function renderTable(items) {
+                let tableBody = $("#foodTable tbody");
+                if (!!items) {
+                    const tableRow1 = $("<tr></tr>");
+                    tableRow1.append(`<td>Total</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.calories, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.serving_size_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.fat_total_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.fat_saturated_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.protein_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.sodium_mg, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.potassium_mg, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.cholesterol_mg, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.carbohydrates_total_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.fiber_g, 0).toFixed(2)}</td>`);
+                    tableRow1.append(`<td>${items.reduce((acc, item) => acc + item.sugar_g, 0).toFixed(2)}</td>`);
+                    tableBody.append(tableRow1);
+
+                    items.forEach(item => {
+                        const tableRow = $("<tr>");
+                        tableRow.append(`<td>${item.name}</td>`);
+                        tableRow.append(`<td>${item.calories}</td>`);
+                        tableRow.append(`<td>${item.serving_size_g}</td>`);
+                        tableRow.append(`<td>${item.fat_total_g}</td>`);
+                        tableRow.append(`<td>${item.fat_saturated_g}</td>`);
+                        tableRow.append(`<td>${item.protein_g}</td>`);
+                        tableRow.append(`<td>${item.sodium_mg}</td>`);
+                        tableRow.append(`<td>${item.potassium_mg}</td>`);
+                        tableRow.append(`<td>${item.cholesterol_mg}</td>`);
+                        tableRow.append(`<td>${item.carbohydrates_total_g}</td>`);
+                        tableRow.append(`<td>${item.fiber_g}</td>`);
+                        tableRow.append(`<td>${item.sugar_g}</td>`);
+
+                        tableBody.append(tableRow);
+                    });
+                } else {
+                    tableBody.empty();
+                }
+
+                $("#foodTable").show();
+            }
+
+
+            $("#sendButton").click(function () {
+                // Get the data from the input box
+                const inputData = $("#inputData").val();
+
+                // // Create the data object to be sent in the AJAX request
+                // const data = { data: inputData };
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api.calorieninjas.com/v1/nutrition?query=' + encodeURIComponent(inputData),
+                    headers: { 'X-Api-Key': CryptoJS.AES.decrypt("U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==", "demo").toString(CryptoJS.enc.Utf8) },
+                    contentType: 'application/json',
+                    success: function (result) {
+                        renderTable(result.items);
+                    },
+                    error: function ajaxError(jqXHR) {
+                        $("#response").text("Error: " + jqXHR.responseText);
+                    }
+                });
+
+            });
+
+
+            $("#recipeButton").click(function () {
+                // Get the data from the input box
+                const inputData = $("#foodRecipeInput").val();
+
+
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api.calorieninjas.com/v1/recipe?query=' + encodeURIComponent(inputData),
+                    headers: {
+                        'X-Api-Key': CryptoJS.AES.decrypt("U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==", "demo").toString(CryptoJS.enc.Utf8),
+
+                    },
+                    contentType: 'application/json',
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function ajaxError(jqXHR) {
+                        $("#response").text("Error: " + jqXHR.responseText);
+                    }
+                }).done(function (response) {
+                    console.log(`Done ${response}`);
+                });
+            });
+
+        });
     </script>
 </body>
 
