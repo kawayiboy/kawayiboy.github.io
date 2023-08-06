@@ -112,9 +112,6 @@
                 // Get the data from the input box
                 const inputData = $("#inputData").val();
 
-                // // Create the data object to be sent in the AJAX request
-                // const data = { data: inputData };
-
                 $.ajax({
                     method: 'GET',
                     url: 'https://api.calorieninjas.com/v1/nutrition?query=' + encodeURIComponent(inputData),
@@ -141,7 +138,7 @@
                     url: 'https://api.calorieninjas.com/v1/recipe?query=' + encodeURIComponent(inputData),
                     headers: {
                         'X-Api-Key': CryptoJS.AES.decrypt("U2FsdGVkX19WvPt8paWR/tHQwJ5YSEKXKpXTv1o/yJNx8Y9EhYpafPGJ0Vmy72KSWO6pDSqDKnC+OCM9Igj1cA==", "demo").toString(CryptoJS.enc.Utf8),
-
+                        'Access-Control-Allow-Origin': 'https://kawayiboy.github.io'
                     },
                     contentType: 'application/json',
                     success: function (result) {
