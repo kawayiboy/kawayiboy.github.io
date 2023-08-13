@@ -30,7 +30,6 @@ generate_sitemap() {
 generate_sitemap_html() {
     cd "$SITEMAP_FOLDER" || exit
     echo "<html><head></head><body><ul>" > "$SITEMAP_HTML_PATH"
-    echo "<li><a href='http://kawayiboy.github.io/'>LuTeng's site</a></li>" >> "$SITEMAP_HTML_PATH"
 
     for file in $SITE_FILES_REGEX; do
         filename=${file:2}
