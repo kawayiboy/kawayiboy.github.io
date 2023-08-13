@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  <style>
+    #toast {
+      position: fixed;
+      width: 100%;
+      bottom: 0;
+      padding: 20px;
+      z-index: 99999;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header>
+      <div class="container">
+        <div class="hero is-info is-bold">
+          <div class="hero-body">
+            <h1 class="is-size-1">Products</h1>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="section">
+      <div class="container">
+        <div>
+          <button class="button is-info" id="createProductButton">
+            + Create Product
+          </button>
+        </div>
+        <div>
+          <table class="table is-fullwidth is-striped" id="productTable">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Brand</th>
+                <th>Price</th>
+                <th>Units in Stock</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="productsTableBody">
+              <!-- Product rows will be added here -->
+            </tbody>
+          </table>
+          <div class="has-text-centered" id="loadingMessage" style="display: none;">
+            <h2 class="is-size-4 has-text-info">Loading...</h2>
+          </div>
+        </div>
+        <div id="toast" class="container" style="display: none;">
+          <h2 class="is-size-5 has-text-white"></h2>
+        </div>
+      </div>
+    </section>
+    <div class="modal" id="modal">
+      <div class="modal-background" id="modalBackground"></div>
+      <div class="modal-content" id="modalContent">
+        <div class="box">
+          <h3 class="is-size-3">Create Product</h3>
+          <hr>
+          <div class="field">
+            <p class="control">
+              <input id="newProductName" class="input" type="text" placeholder="Product Name" value="">
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+            <div class="select">
+              <select id="newProductBrand">
+                <!-- Brand options will be added here -->
+              </select>
+            </div>
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <input id="newProductPrice" class="input" type="number" placeholder="Price">
+            </p>
+          </div>
+          <div class="field">
+            <p class="control">
+              <input id="newProductStockUnits" class="input" type="number" placeholder="Units in Stock">
+            </p>
+          </div>
+          <button class="button is-info" id="createButton">Create</button>
+        </div>
+      </div>
+      <button class="modal-close is-large" aria-label="close" id="closeModalButton"></button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      const apiKey = 'code=j6t0nhqDmCdDUXPsbkU6rKkcGqnfcj3ddYgXGjHTqEbRAzFuFady1g==&clientId=default';
+      const API = 'https://telu-api.azurewebsites.net/api';
+
+      $('#app').on('click', '.button.is-info', function () {
+        $('.modal').addClass('is-active');
+      });
+
+      $('#app').on('click', '.modal-background, .modal-close', function () {
+        $('.modal').removeClass('is-active');
+      });
+
+      $('#app').on('click', '.modal .button.is-info', function () {
+        createProduct();
+      });
+
+      let products = [];
+      const brands = ["Home & Pro tools", "Drills Co", "ProSaws", "ElctroDrill"];
+      const brandSelect = document.getElementById('newProductBrand');
+
+      brands.forEach((brand) => {
+        const option = document.createElement('option');
+        option.value = brand;
+        option.text = brand;
+        brandSelect.appendChild(option);
+      });
+
+      // Initialize newProduct data
+      const newProduct = {
+        name: "",
+        price: null,
+        stockUnits: null,
+        brand: {}
+      };
+
+      function renderProducts() {
+        const tbody = document.getElementById('productsTableBody');
+        tbody.innerHTML = '';
+
+        products.forEach((product, index) => {
+          const tr = document.createElement('tr');
+
+          const nameTd = document.createElement('td');
+          const nameInput = document.createElement('input');
+          nameInput.className = 'input';
+          nameInput.type = 'text';
+          nameInput.value = product.name;
+          nameInput.id = `name-${index}`;
+          nameTd.appendChild(nameInput);
+          tr.appendChild(nameTd);
+
+          const brandTd = document.createElement('td');
+          const brandLabel = document.createElement('label');
+          brandLabel.className = 'label';
+          brandLabel.textContent = product.brand.name;
+          brandTd.appendChild(brandLabel);
+          tr.appendChild(brandTd);
+
+
+          const priceTd = document.createElement('td');
+          const priceInput = document.createElement('input');
+          priceInput.className = 'input';
+          priceInput.type = 'number';
+          priceInput.value = product.price || ''; // You can set the default value here
+          priceInput.id = `price-${index}`;
+          priceTd.appendChild(priceInput);
+          tr.appendChild(priceTd);
+
+          // Create Stock Units column
+          const stockUnitsTd = document.createElement('td');
+          const stockUnitsInput = document.createElement('input');
+          stockUnitsInput.className = 'input';
+          stockUnitsInput.type = 'number';
+          stockUnitsInput.value = product.stockUnits || ''; // You can set the default value here
+          stockUnitsInput.id = `stockUnits-${index}`;
+          stockUnitsTd.appendChild(stockUnitsInput);
+          tr.appendChild(stockUnitsTd);
+
+          // Create Update button column
+          const updateTd = document.createElement('td');
+          const updateButton = document.createElement('button');
+          updateButton.className = 'button';
+          updateButton.textContent = 'Update';
+          updateButton.addEventListener('click', () => updateProduct(index));
+          updateTd.appendChild(updateButton);
+          tr.appendChild(updateTd);
+
+          // Create Delete button column
+          const deleteTd = document.createElement('td');
+          const deleteButton = document.createElement('a');
+          deleteButton.className = 'delete is-large has-background-danger';
+          deleteButton.addEventListener('click', () => deleteProduct(product.id, product.brand.name, index));
+          deleteTd.appendChild(deleteButton);
+          tr.appendChild(deleteTd);
+
+          tbody.appendChild(tr);
+        });
+      }
+
+      function getProducts() {
+        axios
+          .get(`${API}/products?${apiKey}`)
+          .then((response) => {
+            products = response.data;
+            renderProducts();
+          })
+          .catch((err) => {
+            showError("Get", err.message);
+          });
+      }
+
+      function updateProduct(index) {
+        const product = {
+          id: products[index].id,
+          name: $(`#name-${index}`).val(),
+        price: parseInt($(`#price-${index}`).val()),
+        stockUnits: parseInt($(`#stockUnits-${index}`).val()),
+        brand: { name: products[index].brand.name }
+        };
+        console.log(product);
+
+        axios
+          .put(`${API}/product?${apiKey}`, product)
+          .then(() => {
+            showSuccess("Item updated");
+          })
+          .catch((err) => {
+            showError("Update", err.message);
+          });
+      }
+
+      function createProduct() {
+        const newProductData = {
+          name: $(`#newProductName`).val(),
+        price: parseInt($(`#newProductPrice`).val()),
+        stockUnits: parseInt($(`#newProductStockUnits`).val()),
+        brand: { name: $('#newProductBrand').val() }
+        }; 
+
+        console.log(newProductData);
+
+
+        axios
+          .post(`${API}/product?${apiKey}`, newProductData)
+          .then((item) => {
+            products.push(item.data);
+            renderProducts();
+            showSuccess("Item created");
+          })
+          .catch((err) => {
+            showError("Create", err.message);
+          })
+          .finally(() => {
+            $('.modal').removeClass('is-active');
+          });
+      }
+
+      function deleteProduct(id, brandName, index) {
+        console.log(id, brandName, index);
+        const requestData = {
+          brand: {
+            name: brandName
+          }
+        }; // Populate with request data
+
+        axios
+          .delete(`${API}/product/${id}?${apiKey}`, { data: requestData })
+          .then(() => {
+            products.splice(index, 1);
+            renderProducts();
+            showSuccess("Item deleted");
+          })
+          .catch((err) => {
+            showError("Delete", err.message);
+          });
+      }
+
+      function showError(action, message) {
+        showToast(`${action} failed: ${message}`, 'danger');
+        console.error(message);
+      }
+
+      function showSuccess(message) {
+        showToast(message, 'success');
+      }
+
+      function showToast(message, type) {
+        $('#toast').text(message).addClass(`has-background-${type}`).show();
+        setTimeout(() => {
+          $('#toast').removeClass().text('').hide();
+        }, 3000);
+      }
+
+      // Initial load
+      getProducts();
+    });
+  </script>
+</body>
+
+</html>

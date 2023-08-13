@@ -6,7 +6,29 @@
   <meta name="viewport" content="width=device-width">
   <title>JS Bin</title>
   <script type="text/javascript">
-(function(_0x40e6bd,_0x47d09a){const _0xac9986=_0x2bbe,_0x10026b=_0x40e6bd();while(!![]){try{const _0xe0e725=parseInt(_0xac9986(0x159))/0x1*(-parseInt(_0xac9986(0x168))/0x2)+parseInt(_0xac9986(0x155))/0x3*(-parseInt(_0xac9986(0x153))/0x4)+-parseInt(_0xac9986(0x150))/0x5*(parseInt(_0xac9986(0x163))/0x6)+-parseInt(_0xac9986(0x15a))/0x7+-parseInt(_0xac9986(0x165))/0x8*(parseInt(_0xac9986(0x160))/0x9)+parseInt(_0xac9986(0x15d))/0xa+parseInt(_0xac9986(0x15c))/0xb*(parseInt(_0xac9986(0x166))/0xc);if(_0xe0e725===_0x47d09a)break;else _0x10026b['push'](_0x10026b['shift']());}catch(_0x12cf36){_0x10026b['push'](_0x10026b['shift']());}}}(_0x1ce2,0x8c60e));function _0x2bbe(_0x18034f,_0xbf058c){const _0x1ce2b5=_0x1ce2();return _0x2bbe=function(_0x2bbec4,_0x516ef5){_0x2bbec4=_0x2bbec4-0x150;let _0x40381c=_0x1ce2b5[_0x2bbec4];return _0x40381c;},_0x2bbe(_0x18034f,_0xbf058c);}function _0x1ce2(){const _0x502ec2=['videoHeight','4eUHpjq','videoWidth','1665393YEhhBu','URL','path\x20to\x20image\x20asset','width','1158PfCrxS','4534229UxiXex','getElementById','669493TcHNYq','1100190YpKgVY','onload','video','9zLTArv','drawImage','src','6212658tywkuJ','getContext','4735944zFgcwp','852ekehhA','height','1772NeMxTw','5uGkmRa','querySelector'];_0x1ce2=function(){return _0x502ec2;};return _0x1ce2();}function capture(){const _0x2ab9bd=_0x2bbe;var _0x5827e7=document[_0x2ab9bd(0x15b)]('canvas'),_0x2d3c4d=document[_0x2ab9bd(0x151)](_0x2ab9bd(0x15f));_0x5827e7['width']=_0x2d3c4d['videoWidth'],_0x5827e7[_0x2ab9bd(0x167)]=_0x2d3c4d['videoHeight'],_0x5827e7[_0x2ab9bd(0x164)]('2d')['drawImage'](_0x2d3c4d,0x0,0x0,_0x2d3c4d[_0x2ab9bd(0x154)],_0x2d3c4d['videoHeight']);const _0x13241b=new Image();_0x13241b[_0x2ab9bd(0x162)]=_0x2ab9bd(0x157),_0x13241b[_0x2ab9bd(0x15e)]=()=>{const _0x5662d5=_0x2ab9bd,_0x3f913e=_0x2d3c4d[_0x5662d5(0x154)]/0x2-_0x13241b['width']/0x2,_0x2822a8=_0x2d3c4d[_0x5662d5(0x152)]/0x2-_0x13241b['height']/0x2;_0x5827e7[_0x5662d5(0x164)]('2d')[_0x5662d5(0x161)](_0x13241b,_0x3f913e,_0x2822a8,_0x13241b[_0x5662d5(0x158)],_0x13241b[_0x5662d5(0x167)]),_0x5827e7['toBlob']=_0x5d8039=>{const _0xcbc420=_0x5662d5,_0x3e6062=new Image();_0x3e6062[_0xcbc420(0x162)]=window[_0xcbc420(0x156)]['createObjectUrl'](_0x5d8039);};};}
+    function capture() {
+      var canvas = document.getElementById("canvas");
+      var video = document.querySelector("video");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas
+        .getContext("2d")
+        .drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+
+      const playImage = new Image();
+      playImage.src = "path to image asset";
+      playImage.onload = () => {
+        const startX = video.videoWidth / 2 - playImage.width / 2;
+        const startY = video.videoHeight / 2 - playImage.height / 2;
+        canvas
+          .getContext("2d")
+          .drawImage(playImage, startX, startY, playImage.width, playImage.height);
+        canvas.toBlob = (blob) => {
+          const img = new Image();
+          img.src = window.URL.createObjectUrl(blob);
+        };
+      };
+    }
   </script>
 </head>
 
